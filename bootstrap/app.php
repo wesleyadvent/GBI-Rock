@@ -12,10 +12,9 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     
     ->withMiddleware(function (Middleware $middleware): void {
-
-        // DAFTARKAN MIDDLEWARE ROLE DI SINI
         $middleware->alias([
             'role' => \App\Http\Middleware\RoleMiddleware::class,
+            'admin' => App\Http\Middleware\AdminMiddleware::class,
         ]);
     })
 

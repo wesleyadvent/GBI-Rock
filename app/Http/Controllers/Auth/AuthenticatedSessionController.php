@@ -16,7 +16,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View
     {
-        return view('auth.login');
+        return view('login');
     }
 
     /**
@@ -27,7 +27,7 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
         $request->session()->regenerate();
 
-        $role = Auth::user()->role; // <-- PASTI BERFUNGSI
+        $role = Auth::user()->role;
 
         return match ($role) {
             'admin' => redirect()->route('admin.dashboard'),
