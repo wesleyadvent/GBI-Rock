@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AkunPekerjaController;
+use App\Http\Controllers\JadwalKebaktianController;
 
 Route::get('/', function () {
     return view('login');
@@ -11,6 +13,17 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware(['auth', 'role:koordinator_bidang'])->group(function () {
+    Route::get('/koordinator/pekerja', [AkunPekerjaController::class, 'index'])->name('koordinator.pekerja.index');
+    Route::get('/koordinator/pekerja/create', [AkunPekerjaController::class, 'create'])->name('koordinator.pekerja.create');
+    Route::post('/koordinator/pekerja', [AkunPekerjaController::class, 'store'])->name('koordinator.pekerja.store');
+
+    Route::get('/koordinator/pekerja/{id}/edit', [AkunPekerjaController::class, 'edit'])->name('koordinator.pekerja.edit');
+    Route::put('/koordinator/pekerja/{id}', [AkunPekerjaController::class, 'update'])->name('koordinator.pekerja.update');
+
+    Route::delete('/koordinator/pekerja/{id}', [AkunPekerjaController::class, 'destroy'])->name('koordinator.pekerja.destroy');
+});
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/admin/dashboard', function () {
@@ -66,6 +79,30 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/admin/user/store', [AdminController::class, 'store'])
         ->name('admin.user.store');
 });
+
+// Grup Sekretaris
+Route::middleware(['auth', 'role:sekretaris'])->group(function () {
+    Route::get('/sekretaris/jadwal/create', [JadwalKebaktianController::class, 'create'])
+        ->name('sekretaris.jadwal.create');
+
+    Route::post('/sekretaris/jadwal/store', [JadwalKebaktianController::class, 'store'])
+        ->name('sekretaris.jadwal.store');
+
+    Route::get('/sekretaris/jadwal', [JadwalKebaktianController::class, 'index'])
+        ->name('sekretaris.jadwal.index');
+
+    Route::get('/sekretaris/jadwal/detail/{id}', [JadwalKebaktianController::class, 'show']);
+
+    Route::get('/sekretaris/jadwal/{id}/edit', [JadwalKebaktianController::class, 'edit'])
+        ->name('sekretaris.jadwal.edit');
+
+    Route::put('/sekretaris/jadwal/{id}', [JadwalKebaktianController::class, 'update'])
+        ->name('sekretaris.jadwal.update');
+
+    Route::delete('/sekretaris/jadwal/{id}', [JadwalKebaktianController::class, 'destroy'])
+        ->name('sekretaris.jadwal.delete');
+});
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

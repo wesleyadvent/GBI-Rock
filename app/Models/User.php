@@ -56,4 +56,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function bidang()
+    {
+        return $this->belongsTo(Bidang::class, 'id_bidang', 'id_bidang');
+    }
+
 }

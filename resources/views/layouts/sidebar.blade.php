@@ -34,6 +34,7 @@
                             </span>
                             <span class="hide-menu">Dashboard</span>
                         </a>
+
                     @elseif (Auth::check() && Auth::user()->role === 'penatua')
                         <a class="sidebar-link" href="{{ route('penatua.dashboard') }}" aria-expanded="false">
                             <span>
@@ -136,6 +137,7 @@
                     </li>
                 @endif -->
 
+                <!--Manjemen Akun-->
                 @if(Auth::user()->role === 'admin')
                     <li class="nav-small-cap">
                         <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
@@ -151,6 +153,39 @@
                     </li>
                 @endif
 
+                @if(Auth::user()->role === 'koordinator_bidang')
+                    <li class="nav-small-cap">
+                        <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                        <span class="hide-menu">Manajemen Akun</span>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="{{ route('koordinator.pekerja.index') }}" aria-expanded="false">
+                    <span>
+                      <i class="ti ti-user-plus"></i>
+                    </span>
+                            <span class="hide-menu">Tambah Akun Pekerja</span>
+                        </a>
+                    </li>
+                @endif
+
+                @if(Auth::user()->role === 'sekretaris')
+                    <li class="nav-small-cap">
+                        <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                        <span class="hide-menu">Manage Jadwal Kebaktian</span>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="{{ route('sekretaris.jadwal.create') }}" aria-expanded="false">
+                            <span><i class="ti ti-cards"></i></span>
+                            <span class="hide-menu">Tambah Jadwal Kebaktian</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="{{ route('sekretaris.jadwal.index') }}" aria-expanded="false">
+                            <span><i class="ti ti-cards"></i></span>
+                            <span class="hide-menu">Lihat Jadwal Kebaktian</span>
+                        </a>
+                    </li>
+                @endif
 
                 <li class="nav-small-cap">
                     <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
