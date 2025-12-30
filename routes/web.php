@@ -5,6 +5,8 @@ use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AkunPekerjaController;
 use App\Http\Controllers\JadwalKebaktianController;
+use App\Http\Controllers\KoordinatorBidangController;
+use App\Http\Controllers\PekerjaController;
 
 Route::get('/', function () {
     return view('login');
@@ -23,6 +25,12 @@ Route::middleware(['auth', 'role:koordinator_bidang'])->group(function () {
     Route::put('/koordinator/pekerja/{id}', [AkunPekerjaController::class, 'update'])->name('koordinator.pekerja.update');
 
     Route::delete('/koordinator/pekerja/{id}', [AkunPekerjaController::class, 'destroy'])->name('koordinator.pekerja.destroy');
+
+    // Koordinator mencari tim pelayanan pelayanan
+    Route::get('/timPelayanan/index', [KoordinatorBidangController::class, 'index'])->name('timPelayanan.index');
+    Route::get('/timPelayanan/index/detail/{id}', [KoordinatorBidangController::class, 'showDetail']);
+    Route::post('/timPelayanan/index/assign', [KoordinatorBidangController::class, 'assignPekerja'])->name('timPelayanan.assign');
+    Route::delete('/tim-pelayanan/batal/{id}', [KoordinatorBidangController::class, 'destroy'])->name('timPelayanan.batal');
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -103,6 +111,11 @@ Route::middleware(['auth', 'role:sekretaris'])->group(function () {
         ->name('sekretaris.jadwal.delete');
 });
 
+Route::middleware(['auth', 'role:pekerja'])->prefix('pekerja')->group(function () {
+    Route::get('/pekerja/index', [PekerjaController::class, 'index'])->name('pekerja.index');
+    Route::post('/pekerja/index/konfirmasi/{id_tugas}', [PekerjaController::class, 'konfirmasi'])->name('pekerja.konfirmasi');
+});
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -110,4 +123,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
