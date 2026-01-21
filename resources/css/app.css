@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* Custom Bootstrap colors */
+.bg-warning-alt {
+    background-color: #fd7e14 !important;
+}
+
+.bg-warning-alt.text-white {
+    color: #ffffff !important;
+}
+
+.bg-warning-alt.text-dark {
+    color: #212529 !important;
+}

@@ -8,13 +8,19 @@ The Laravel Boost guidelines are specifically curated by Laravel maintainers for
 ## Foundational Context
 This application is a Laravel application and its main Laravel ecosystems package & versions are below. You are an expert with them all. Ensure you abide by these specific packages & versions.
 
-- php - 8.2.12
+- php - 8.4.4
+- inertiajs/inertia-laravel (INERTIA) - v2
 - laravel/framework (LARAVEL) - v12
 - laravel/prompts (PROMPTS) - v0
+- laravel/sanctum (SANCTUM) - v4
+- tightenco/ziggy (ZIGGY) - v2
+- laravel/breeze (BREEZE) - v2
 - laravel/mcp (MCP) - v0
 - laravel/pint (PINT) - v1
 - laravel/sail (SAIL) - v1
 - phpunit/phpunit (PHPUNIT) - v11
+- alpinejs (ALPINEJS) - v3
+- tailwindcss (TAILWINDCSS) - v3
 
 ## Conventions
 - You must follow all existing code conventions used in this application. When creating or editing a file, check sibling files for the correct structure, approach, naming.
@@ -105,6 +111,52 @@ protected function isAccessible(User $user, ?string $path = null): bool
 
 ## Enums
 - Typically, keys in an Enum should be TitleCase. For example: `FavoritePerson`, `BestLake`, `Monthly`.
+
+
+=== tests rules ===
+
+## Test Enforcement
+
+- Every change must be programmatically tested. Write a new test or update an existing test, then run the affected tests to make sure they pass.
+- Run the minimum number of tests needed to ensure code quality and speed. Use `php artisan test` with a specific filename or filter.
+
+
+=== inertia-laravel/core rules ===
+
+## Inertia Core
+
+- Inertia.js components should be placed in the `resources/js/Pages` directory unless specified differently in the JS bundler (vite.config.js).
+- Use `Inertia::render()` for server-side routing instead of traditional Blade views.
+- Use `search-docs` for accurate guidance on all things Inertia.
+
+<code-snippet lang="php" name="Inertia::render Example">
+// routes/web.php example
+Route::get('/users', function () {
+    return Inertia::render('Users/Index', [
+        'users' => User::all()
+    ]);
+});
+</code-snippet>
+
+
+=== inertia-laravel/v2 rules ===
+
+## Inertia v2
+
+- Make use of all Inertia features from v1 & v2. Check the documentation before making any changes to ensure we are taking the correct approach.
+
+### Inertia v2 New Features
+- Polling
+- Prefetching
+- Deferred props
+- Infinite scrolling using merging props and `WhenVisible`
+- Lazy loading data on scroll
+
+### Deferred Props & Empty States
+- When using deferred props on the frontend, you should add a nice empty state with pulsing / animated skeleton.
+
+### Inertia Form General Guidance
+- Build forms using the `useForm` helper. Use the code examples and `search-docs` tool with a query of `useForm helper` for guidance.
 
 
 === laravel/core rules ===
@@ -199,4 +251,36 @@ protected function isAccessible(User $user, ?string $path = null): bool
 - To run all tests: `php artisan test`.
 - To run all tests in a file: `php artisan test tests/Feature/ExampleTest.php`.
 - To filter on a particular test name: `php artisan test --filter=testName` (recommended after making a change to a related file).
+
+
+=== tailwindcss/core rules ===
+
+## Tailwind Core
+
+- Use Tailwind CSS classes to style HTML, check and use existing tailwind conventions within the project before writing your own.
+- Offer to extract repeated patterns into components that match the project's conventions (i.e. Blade, JSX, Vue, etc..)
+- Think through class placement, order, priority, and defaults - remove redundant classes, add classes to parent or child carefully to limit repetition, group elements logically
+- You can use the `search-docs` tool to get exact examples from the official documentation when needed.
+
+### Spacing
+- When listing items, use gap utilities for spacing, don't use margins.
+
+    <code-snippet name="Valid Flex Gap Spacing Example" lang="html">
+        <div class="flex gap-8">
+            <div>Superior</div>
+            <div>Michigan</div>
+            <div>Erie</div>
+        </div>
+    </code-snippet>
+
+
+### Dark Mode
+- If existing pages and components support dark mode, new pages and components must support dark mode in a similar way, typically using `dark:`.
+
+
+=== tailwindcss/v3 rules ===
+
+## Tailwind 3
+
+- Always use Tailwind CSS v3 - verify you're using only classes supported by this version.
 </laravel-boost-guidelines>

@@ -17,6 +17,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'admin' => App\Http\Middleware\AdminMiddleware::class,
             'koordinator' => App\Http\Middleware\KoordinatorBidangMiddleware::class,
             'sekretaris' => App\Http\Middleware\SekretarisMiddleware::class,
+            'pekerja' => App\Http\Middleware\PekerjaMiddleware::class,
+            'penatua' => App\Http\Middleware\PenatuaMiddleware::class,
         ]);
     })
 
